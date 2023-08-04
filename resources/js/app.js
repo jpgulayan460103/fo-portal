@@ -4,9 +4,17 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+import './bootstrap'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
-window.Vue = require('vue').default;
+
+import Vue from 'vue';
+
+import Profile from './pages/profile/Profile'
+import Home from './pages/home/Home'
+import Register from './pages/auth/Register'
+import Login from './pages/auth/Login'
+import UserControl from './pages/auth/UserControl'
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,7 +27,11 @@ window.Vue = require('vue').default;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('profile', Profile);
+Vue.component('home', Home);
+Vue.component('register', Register);
+Vue.component('login-form', Login);
+Vue.component('user-control', UserControl);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

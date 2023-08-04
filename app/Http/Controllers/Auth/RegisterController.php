@@ -3,71 +3,66 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Office;
+use App\Models\Position;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Rules\ValidCellphoneNumber;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
-    use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    protected function store(Request $request)
     {
-        $this->middleware('guest');
+        $request->validate([
+            'email_address' => ['required', 'string', 'email', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'office_id' => ['required'],
+            'position_id' => ['required'],
+            'auth_type' => ['required'],
+            'mobile_number' => ['required', 'string', 'max:11', new ValidCellphoneNumber],
+        ]);
+
+        $data = $request->all();
+
+        DB::transaction(function() use ($data){
+            $user = User::create([
+                'username' => $data['username'],
+                'email_address' => $data['email_address'],
+                'auth_type' => $data['auth_type'],
+                'password' => Hash::make(Str::random(8)),
+            ]);
+    
+            $user->userInformation()->create([
+                'first_name' => $data['first_name'],
+                'middle_name' => $data['middle_name'],
+                'last_name' => $data['last_name'],
+                'ext_name' => $data['ext_name'],
+                'mobile_number' => $data['mobile_number'],
+                'office_id' => $data['office_id'],
+                'position_id' => $data['position_id'],
+                'designation' => $data['designation'],
+            ]);
+            
+            return $user;
+
+        }, 5);
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
+    public function show()
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
+        $data = [
+            'offices' => Office::all(),
+            'positions' => Position::all(),
+            'user_data' => session('userInformation')
+        ];
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        return view('auth.register', $data);
     }
 }

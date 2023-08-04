@@ -30,4 +30,24 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'ad' => [
+        'host' => env('AD_HOST'),
+        'domain' => env('AD_DOMAIN'),
+        'search' => env('AD_SEARCH'),
+        'default_password' => env('AD_DEFAULT_PASSWORD'),
+    ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_AUTH_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_AUTH_CLIENT_SECRET'),
+        'redirect' => env('GOOGLE_AUTH_REDIRECT_URL'),
+    ],
+
+    'sms' => [
+        'gateway' => env('SMS_GATEWAY_URL'),
+        'api_key' => env('SMS_API_KEY'),
+        'client_id' => env('SMS_CLIENT_ID'),
+        'sender_id' => env('SMS_SENDER_ID'),
+    ]
+
 ];

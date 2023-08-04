@@ -18,7 +18,10 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username',
+        'email_address',
+        'password',
+        'auth_type',
     ];
 
     /**
@@ -38,4 +41,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function userInformation()
+    {
+        return $this->hasOne(UserInformation::class);
+    }
+
+    public function otpCodes()
+    {
+        return $this->hasOne(OneTimePassword::class);
+    }
+
 }
