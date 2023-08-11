@@ -20,8 +20,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/', [HomeController::class, 'index'])->name('index');
 
-// Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 Route::post('/login', [LoginController::class, 'login'])->name('auth.login');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -29,4 +27,4 @@ Route::get('/register', [RegisterController::class, 'show'])->name('register.ind
 
 Route::get('/auth/google/signin', [LoginController::class, 'signInwithGoogle'])->name('auth.google.signin');
 Route::get('/auth/google/callback', [LoginController::class, 'callbackToGoogle'])->name('auth.google.callback');
-Route::get('/auth/google/register', [RegisterController::class, 'show'])->name('auth.google.callback');
+Route::get('/auth/google/register', [RegisterController::class, 'show'])->name('auth.google.register');
