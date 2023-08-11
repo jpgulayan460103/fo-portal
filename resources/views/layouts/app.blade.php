@@ -19,6 +19,8 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}?v=1.1" rel="stylesheet">
 
+    <link rel="icon" href="{{ asset('images/favicon.ico') }}"/>
+
     @routes()
 </head>
 <body>
