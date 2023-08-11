@@ -42,12 +42,6 @@
                     Register
                 </button>
 
-
-                <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="errors ? errors.login : ''">
-                    Must be DSWD corporate email account to sign in.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-
                 <button type="button" data-bs-toggle="modal" data-bs-target="#otp-modal" style="display: none;" ref="otpButton">
                     Otp
                 </button>

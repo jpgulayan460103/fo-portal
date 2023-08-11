@@ -23,6 +23,11 @@
                 </button>
             </template>
         </modal>
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="errors && errors.login">
+            <span v-if="errors.login">{{ errors.login }}</span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
         
         <div class="row">
             <div :class="[isEmpty(authUser) ? 'col-md-9' : 'col-md-12']">

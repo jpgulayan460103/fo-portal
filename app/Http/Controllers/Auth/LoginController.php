@@ -308,7 +308,7 @@ class LoginController extends Controller
                         ], 422);
                     }else{
                         return redirect('/')->with(['error' => [
-                            'login' => 'Must be DSWD corporate email account to sign in.'
+                            'login' => 'Sign in failed! Must be DSWD corporate email account to sign in.'
                         ]]);
                     }
                 }
