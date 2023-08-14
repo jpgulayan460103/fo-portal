@@ -21,4 +21,12 @@ class UserInformation extends Model
         'user_image_file',
         'user_id',
     ];
+
+    public function office(){
+        return $this->belongsTo(Office::class);
+    }
+    
+    public function position(){
+        return $this->belongsTo(Position::class);
+    }
 }

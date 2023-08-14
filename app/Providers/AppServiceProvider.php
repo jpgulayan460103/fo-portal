@@ -24,7 +24,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $urlGenerator = app(UrlGenerator::class);
-		$urlGenerator->forceRootUrl(config('app.url'));
+        if(config('app.env') == "production"){
+            $urlGenerator = app(UrlGenerator::class);
+            $urlGenerator->forceRootUrl(config('app.url'));
+        }
     }
 }

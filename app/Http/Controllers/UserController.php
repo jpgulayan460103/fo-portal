@@ -88,8 +88,8 @@ class UserController extends Controller
         $auth_auth = $request->user();
 
         $user = User::with([
-            'user_information',
-            'user_signature',
+            'userInformation.office',
+            'userInformation.position',
         ])->find($auth_auth->id);
 
         return $user;

@@ -96,14 +96,14 @@ class LoginController extends Controller
                 if($request->has('otpCode')){
                     Auth::login($user, $request->remember);
                 }else{
-                    $otpCode = $user->otpCodes()->create([
+                    $oneTimePassword = $user->otpCodes()->create([
                         'otp_code' => random_int(100000, 999999),
                         'reference_number' => Str::random(10),
                     ]);
                     
-                    $auth['otpCode'] = $otpCode;
+                    $auth['otpCode'] = $oneTimePassword;
 
-                    $this->sendOneTimePassword($user->userInformation->mobile_number, $otpCode);
+                    $this->sendOneTimePassword($user->userInformation->mobile_number, $oneTimePassword);
                 }
                 return $this->sendLoginResponse($request, $auth);
             }else{
@@ -120,12 +120,12 @@ class LoginController extends Controller
         return $this->sendFailedLoginResponse($request);
     }
 
-    protected function sendOneTimePassword($number, $otpCode) {
+    protected function sendOneTimePassword(string $number, OneTimePassword $oneTimePassword) {
         $smsGatewayUrl = config('services.sms.gateway');
         $apiKey = config('services.sms.api_key');
         $clientId = config('services.sms.client_id');
         $senderId = config('services.sms.sender_id');
-        $message = "Your One-Time Password (OTP) is $otpCode->otp_code.";
+        $message = "Your One-Time Password (OTP) is $oneTimePassword->otp_code.";
         $receiverNumber = "639".substr($number, 2);
 
         $response = Http::get($smsGatewayUrl, [

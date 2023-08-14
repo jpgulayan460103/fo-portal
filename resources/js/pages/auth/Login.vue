@@ -14,7 +14,7 @@
                 <input  type="password" class="form-control" v-model="formData.password" required autocomplete="current-password">
             </div>
             <div class="mb-3">
-                <input class="form-check-input" type="checkbox" v-model="formData.remember" > 
+                <input class="form-check-input" id="remember" type="checkbox" v-model="formData.remember" > 
                 <label class="form-check-label" for="remember">
                     Keep me signed in
                 </label>
