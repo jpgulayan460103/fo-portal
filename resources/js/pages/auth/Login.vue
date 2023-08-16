@@ -139,6 +139,9 @@ import isEmpty from 'lodash/isEmpty';
             submitForm(){
                 Axios.post(route('auth.login'), this.formData)
                 .then(res => {
+                    if(isEmpty(res.data.otpCode)){
+                        window.location.href = route('register.index');
+                    }
                     this.validatedUser = res.data.user.user_information;
                     this.validCredentials = cloneDeep(this.formData);
 

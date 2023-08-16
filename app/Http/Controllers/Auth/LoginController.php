@@ -88,7 +88,6 @@ class LoginController extends Controller
         }
         
         $auth = $this->attemptLogin($request);
-
         if ($auth['status'] == "ok") {
 
             $user = User::with(['userInformation'])->where('username', $auth['data']['username'])->first();

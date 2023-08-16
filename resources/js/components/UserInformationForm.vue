@@ -41,7 +41,7 @@
         <div class="row mb-3">
 
             <div class="col-md-3">
-                <form-item label="Mobile Number" :errors="formErrors.mobile_number">
+                <form-item label="Mobile Number" :errors="formErrors.mobile_number" help="Mobile number to be used in OTP.">
                     <input type="text" class="form-control" v-model="formData.mobile_number" :class="formErrors.mobile_number ? 'is-invalid' : ''" autocomplete="new-password">
                 </form-item>
             </div>
