@@ -66,6 +66,7 @@ class LoginController extends Controller
     {
         $request->validate([
             'otpCode' => ['required', new ValidOtp],
+            'remember' => ['required'],
         ]);
     }
 
@@ -94,7 +95,7 @@ class LoginController extends Controller
             $auth['user'] = $user;
             if($user){
                 if($request->has('otpCode')){
-                    Auth::login($user, $request->remember);
+                    Auth::login($user, $request->remember == "stay-signin");
                 }else{
                     $oneTimePassword = $user->otpCodes()->create([
                         'otp_code' => random_int(100000, 999999),

@@ -1,29 +1,5 @@
 <template>
     <div class="container">
-        <modal modal-id="register-modal" modal-title="">
-            <template v-slot:body>
-                <form id="ad-login" @submit.prevent="activeDirectoryLogin">
-                    <div class="mb-3">
-                        <label for="username">DSWD Account</label>
-                        <input  type="text" class="form-control" v-model="activeDirectory.username" required autocomplete="username" autofocus>
-                        <div class="form-text">You can use your Active Diretory (AD) or Global Protect (GP) account.</div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="password">Password</label>
-                        <input  type="password" class="form-control" v-model="activeDirectory.password" required autocomplete="current-password">
-                    </div>
-                </form>
-            </template>
-            <template v-slot:footer>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" form="ad-login" class="btn btn-danger">
-                    <i class="bi bi-person-fill"></i>
-                    Register
-                </button>
-            </template>
-        </modal>
-
         <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="errors && errors.login">
             <span v-if="errors.login">{{ errors.login }}</span>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -87,10 +63,6 @@
             return {
                 webApplications: [],
                 queryString: "",
-                activeDirectory: {
-                    username: null,
-                    password: null,
-                }
             };
         },
         methods: {
@@ -110,13 +82,6 @@
             searchApplication: debounce(function() {
                 this.getWebApplications();
             }, 500),
-            activeDirectoryLogin(){
-                Axios.post(route('auth.login'), this.activeDirectory)
-                .then(res => {
-                    window.location.href = route('register.index')
-                })
-                .catch(err => {})
-            },
             isEmpty(value){
                 return isEmpty(value);
             }
